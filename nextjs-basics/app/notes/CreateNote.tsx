@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 // export default function Test() {
 //   return (
@@ -8,57 +8,57 @@
 //   );
 // }
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+// import PocketBase from "pocketbase";
+import Form from "next/form";
 
 export default function CreateNote() {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
+	const [title, setTitle] = useState("");
+	const [content, setContent] = useState("");
 
-    const router = useRouter();
+	const router = useRouter();
 
-    const create = async () => {
-        // const db = new PocketBase('http://127.0.0.1:8090');
+	const create = async () => {
+		// const db = new PocketBase("http://127.0.0.1:8090");
 
-        // await db.records.create('notes', {
-        //   title,
-        //   content,
-        // });
+		// await db.collection("notes").create({
+		// 	title,
+		// 	content,
+		// });
 
-        await fetch('http://127.0.0.1:8090/api/collections/notes/records', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                title,
-                content,
-            }),
-        });
+		await fetch("http://127.0.0.1:8090/api/collections/notes/records", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				title,
+				content,
+			}),
+		});
 
-        setContent('');
-        setTitle('');
+		setContent("");
+		setTitle("");
 
-        router.refresh();
-    }
+		router.refresh();
+	};
 
-    return (
-        <form onSubmit={create}>
-            <h3>Create a new Note</h3>
-            <input
-                type="text"
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-            />
-            <textarea
-                placeholder="Content"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-            />
-            <button type="submit">
-                Create note
-            </button>
-        </form>
-    );
+	return (
+		<Form action={create}>
+			<h3>Create a new Note</h3>
+			<input
+				type="text"
+				placeholder="Title"
+				value={title}
+				onChange={(e) => setTitle(e.target.value)}
+			/>
+			<textarea
+				placeholder="Content"
+				value={content}
+				onChange={(e) => setContent(e.target.value)}
+			/>
+			<button type="submit">Create note</button>
+		</Form>
+	);
 }
